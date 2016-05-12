@@ -1,0 +1,91 @@
+@import '../sierra/_variables.scss';
+
+$nav-height: 40px;
+$redacted-color: #1C2E3F;
+
+.redacted {
+	color: $redacted-color;
+	background-color: $redacted-color;
+	padding: 2px;
+}
+
+.main {
+	margin-top: $nav-height;
+}
+
+.main-section-header {
+	margin-top: 0 !important;
+}
+
+.anchor {
+	display: block;
+	position: relative;
+	top: -40px;
+	visibility: hidden;
+}
+
+.anchor:first-child {
+	top: 0px;
+}
+
+.navigation {
+	position: fixed;
+	top: 0;
+	z-index: 10000;
+	width: 100%;
+	background-color: $body-bg;
+  border-bottom: 1px solid $border-color;
+	/*height: $nav-height;
+	max-height: $nav-height;*/
+	min-height: ($nav-height + 4);
+	padding-left: 10px;
+}
+
+.navigation .text-logo {
+	display: inline;
+	margin-right: 30px;
+	margin-left: 20px;
+	line-height: ($nav-height + 4);
+}
+
+.logo {
+	text-align: center;
+}
+
+.tabs.tabs-compact {
+	display: inline;
+	width: 100%;
+	height: $nav-height;
+	border-bottom: none;
+}
+
+.tabs-compact .tab {
+	line-height: ($nav-height - 7);
+	margin-right: 20px;
+}
+
+.project .col-md-3 {
+	text-align: center;
+}
+
+.project img {
+	padding: 20px 20px 20px 0;
+}
+
+.project .title {
+	margin-top: 20px;
+}
+
+.project .title, .project .links, .project .badges {
+	@media only screen and (max-width: 480px) {
+		text-align: center;
+	}
+}
+
+.project .text {
+	text-align: justify;
+}
+
+.no-cursor {
+	cursor: default;
+}

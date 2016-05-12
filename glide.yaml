@@ -1,0 +1,15 @@
+package: site
+import:
+- package: github.com/jimlawless/cfg
+- package: github.com/flosch/pongo2
+- package: github.com/echo-contrib/pongor
+- package: github.com/labstack/echo
+  subpackages:
+  - '...'
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: golang.org/x/sys
+  subpackages:
+  - '...'
+- package: github.com/fsnotify/fsnotify

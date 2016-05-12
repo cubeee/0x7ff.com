@@ -1,0 +1,44 @@
+{
+	"name": "0x7ff.com",
+	"version": "1.0.0",
+	"description": "Website source code for 0x7ff.com",
+	"private": true,
+	"license": "UNLICENSED",
+	"contributors": [{
+		"name": "Cube",
+		"url": "https://0x7ff.com/"
+	}],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/cubeee/site"
+	},
+	"scripts": {
+		"build": "gulp build",
+		"clean": "gulp clean"
+	},
+	"engines": {
+		"node": "*"
+	},
+	"browser": {
+		"jquery": "./node_modules/jquery/dist/jquery.js"
+	},
+	"dependencies": {
+		"jquery": "*",
+		"sierra-library": "*",
+		"require-dir": "*",
+		"rmdir": "*",
+		"run-sequence": "*",
+		"browserify": "*",
+		"vinyl-buffer": "*",
+		"event-stream": "*",
+		"glob": "*",
+		"path": "*",
+		"vinyl-source-stream": "*",
+		"gulp-watch-less": "*",
+		"gulp-minify-css": "*",
+		"gulp-sass": "*",
+		"gulp-chug": "*",
+		"gulp-jshint": "*",
+		"gulp-uglify": "*"
+	}
+}

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>0x7ff</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Lato:400,700,300' type='text/css'>
+	<link rel="stylesheet" href="static/css/sierra.min.css">
+	<link rel="stylesheet" href="static/css/site.css">
+	<script src="//use.fontawesome.com/89317662ce.js"></script>
+</head>
+
+{% macro redact(text, alt, alt_redacted) %}
+	{% if !unlock and alt_redacted %}
+		{{ alt_redacted|redact:True|safe }}
+	{% elif !unlock and alt and !alt_redacted %}
+		{{ alt|safe }}
+	{% else %}
+		{{ text|redact:unlock|safe }}
+	{% endif %}
+{% endmacro %}
+
+{% macro badge(text, class) %}
+<li class="badges-list-item {{ class }}">{{ text }}</li>
+{% endmacro %}
+
+<body>
+	<div class="navigation">
+		<a class="text-medium text-white text-logo" href="#">0x7ff</a>
+		<div class="tabs tabs-compact nav">
+			<a id="tab-overview" href="#" class="tab">Overview</a>
+			<a id="tab-about-me" href="#about-me" class="tab">About me</a>
+			<a id="tab-projects" href="#projects" class="tab">Projects</a>
+			<a id="tab-contact" href="#contact" class="tab">Contact</a>
+		</div>
+	</div>
+
+	<main>
+		<div class="section background-dark main">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-2">
+						<div class="opacity-low logo">
+							<img src="https://avatars3.githubusercontent.com/u/419085?v=3&s=460" alt="avatar" width="246">
+						</div>
+					</div>
+					<div class="col-md-10">
+						<div>
+							<div class="container">
+								<h3 class="main-section-header text-huge text-white text-with-subtitle">{{ messages.title }}</h3>
+								<p class="text-medium text-gray text-with-subtitle">{{ redact(messages.slogan, messages.slogan_alt) }}</p>
+								<p class="text-medium text-gray text-with-subtitle">Location: {{ redact(messages.city) }}, {{ redact(messages.province) }}, {{ messages.country }}</p>
+								<p class="text-medium text-gray text-with-subtitle">Github: <a href="{{ messages.github }}">{{ messages.github }}</a></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<a class="anchor" id="about-me"></a>
+			<h2 class="text-huge text-with-subtitle border-bottom">About me</h2>
+			<p class="text-medium">I am a software developer, technology enthusiast and a gamer from {{ messages.country }} with special interest towards developing lightweight applications and products.
+			This site serves as a portfolio on which you will find listed and described some of the projects I've worked on.</p>
+			<p class="text-medium">I am currently looking for employment near {{ redact(messages.city_1) }}, {{ redact(messages.city_2) }} or {{ redact(messages.city_3) }} as a (junior) software developer doing either backend or full stack development in a Java/Go ecosystem.</p>
+			<p class="text-medium">You can find my contact information down below or by clicking <a href="#contact">here</a>.</p>
+		</div>
+
+		<div class="container">
+			<a class="anchor" id="projects"></a>
+			<h2 class="text-huge text-with-subtitle border-bottom">Projects</h2>
+
+			<div class="project row">
+				<div class="col-md-3">
+					<img src="//i.imgur.com/wS7n2gE.png" alt="Preview">
+				</div>
+				<div class="col-md-9">
+				<h3 class="title text-big text-with-subtitle">ScapeLog</h3>
+				<p class="links">
+					<a href="https://scapelog.com/">Website</a> - <a href="{{ messages.github }}/scapelog">GitHub</a>
+				</p>
+					<div class="content-start">
+						<p class="text">ScapeLog is a third party client for the popular MMORPG <a href="https://www.runescape.com/">RuneScape</a> by <a href="https://www.jagex.com/">Jagex</a> designed to offer slight gameplay enhancing features for players.<br/>
+						Modifying of the game code is made possible by modifying classes' bytecode on the fly using <a href="https://docs.oracle.com/javase/7/docs/api/java/lang/instrument/package-summary.html">agents</a> and the <a href="http://asm.ow2.org/">ASM</a> bytecode library.<br/>
+						Accessing the game's data is accomplished by injecting low profile event emitters into the client to keep third party footprint as small as possible.<br/>
+						Perhaps the most useful feature of ScapeLog is realtime experience gaining indicators which has been purely manual calculating until very recently<br/>
+						When the game's developers started offering a paid service to do experience gain tracking.<br/>
+						ScapeLog has so far been my biggest, longest and favourite project as it gave me a good introduction to Java bytecode and reverse engineering.<br/>
+						Development of ScapeLog has been essentially halted after Jagex's announcement of the new C++ game client which will supersede the original Java client, making ScapeLog obsolete.<br/>
+						</p>
+					</div>
+					<ul class="badges no-cursor badges-list">
+						{{ badge("Java") }}
+						{{ badge("JavaFX") }}
+						{{ badge("Bytecode") }}
+						{{ badge("CSS") }}
+						{{ badge("MIT Licensed") }}
+					</ul>
+				</div>
+			</div>
+			<div class="project border-top row">
+				<div class="col-md-3">
+					<img src="//i.imgur.com/4Yzijaf.png" alt="Preview">
+				</div>
+				<div class="col-md-9">
+					<h3 class="title text-big text-with-subtitle">go-sig</h3>
+					<p class="links">
+						<a href="https://sig.scapelog.com/">Website</a> - <a href="{{ messages.github }}/go-sig">GitHub</a>
+					</p>
+					<div class="content-start">
+						<p class="text">
+							go-sig is a databaseless image compositor service for <a href="https://www.runescape.com/">RuneScape</a> skill goals.<br/>
+							Players can enter their skill goals on the front page or by manually typing urls and go-sig will return them a composited<br/>
+							image with parsed information fetched from RuneScape's CSV highscores endpoint.<br/>
+							Upon visiting an image url go-sig uses the image's modification time to determine if the image should be updated,</br>
+							this lets it operate without a database or worry about lost image files as they will simply be composited again if they are not found.
+						</p>
+					</div>
+					<ul class="badges no-cursor badges-list">
+						{{ badge("Go") }}
+						{{ badge("Image composition") }}
+						{{ badge("MIT Licensed") }}
+					</ul>
+				</div>
+			</div>
+			<div class="project border-top row">
+				<div class="col-md-3">
+					<img src="https://placeholdit.imgix.net/~text?txtsize=45&txt=N/A&w=250&h=250" alt="Preview">
+				</div>
+				<div class="col-md-9">
+					<h3 class="title text-big text-with-subtitle">irkki-client</h3>
+					<p class="links">
+						<a href="{{ messages.github }}/irkki-client">GitHub</a>
+					</p>
+					<div class="content-start">
+						<p class="text">
+							irkki-client is an event based IRC client library in progress written in Go.<br/>
+							irkki-client will feature a high-level API and support the most essential parts of IRC protocol.
+						</p>
+					</div>
+					<ul class="badges no-cursor badges-list">
+						{{ badge("Go") }}
+						{{ badge("IRC") }}
+						{{ badge("In development", "badge-dark") }}
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<a class="anchor" id="contact"></a>
+			<h2 class="text-huge text-with-subtitle border-bottom">Contact</h2>
+			<p class="text-medium">Email: <a href="mailto:{{ redact(messages.email, messages.email_alt) }}">{{ redact(messages.email, messages.email_alt) }}</a></p>
+			<p class="text-medium">Phone: {{ redact(messages.phone) }}</p>
+		</div>
+
+		<div class="section background-dark">
+			<div class="container">
+				<span style="text-align: left;">&copy; 0x7ff.com 2015-2016</span>
+				<a href="#" style="float: right;">Top</a>
+			</div>
+		</div>
+	</main>
+	<script src="static/js/site.js"></script>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	  ga('create', 'UA-29567930-4', 'auto');
+	  ga('send', 'pageview');
+	</script>
+</body>
+</html>
