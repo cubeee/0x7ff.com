@@ -13,12 +13,12 @@ import (
 	"log"
 )
 
-const SECRET_KEY = "key"
 const MESSAGES_FILE = "resources/messages.txt"
 
 var (
 	listenAddr     = flag.String("addr", ":8081", "Address to listen on")
 	templateReload = flag.Bool("reload", false, "Reload templates and messages when changes are detected")
+	secretKey      = flag.String("key", "key", "Key of secret for redacting text")
 	secret         = flag.String("secret", "", "Secret for redacting text")
 	messages       = loadMessages()
 )
@@ -80,7 +80,7 @@ func main() {
 }
 
 func getContext(ctx echo.Context) map[string]interface{} {
-	key := ctx.QueryParam(SECRET_KEY)
+	key := ctx.QueryParam(*secretKey)
 	return map[string]interface{}{
 		"messages": messages,
 		"unlock":   key == *secret,
