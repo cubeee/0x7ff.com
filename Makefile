@@ -6,7 +6,7 @@ deps:
 build:
 	go build -o site main.go
 
-package: deps build
+package: build
 	sudo rm -rf build/
 	mkdir -p build/opt/0x7ff
 	mkdir -p build/opt/0x7ff/resources
