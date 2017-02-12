@@ -28,3 +28,15 @@ package: build
 	tar cvzf build/data.tar.gz -C build etc opt
 	tar cvzf build/control.tar.gz -C build control
 	cd build && ar rc site-0x7ff.deb debian-binary control.tar.gz data.tar.gz && cd ..
+
+deploy:
+	mkdir -p tmp
+	echo "sudo dpkg -i /tmp/site-deploy/site-0x7ff.deb" >> tmp/deploy
+	echo "sudo systemctl daemon-reload" >> tmp/deploy
+	echo "sudo systemctl restart site-0x7ff" >> tmp/deploy
+	echo "rm -r /tmp/site-deploy" >> tmp/deploy
+	chmod +x tmp/deploy
+	rsync -aqzhe ssh --progress --checksum --timeout=10 build/site-0x7ff.deb ${user}@${target}:/tmp/site-deploy/
+	rsync -aqzhe ssh --progress --checksum --timeout=10 tmp/deploy ${user}@${target}:/tmp/site-deploy/
+	ssh -t ${user}@${target} "sudo /tmp/site-deploy/deploy"
+	rm -r tmp/
