@@ -50,7 +50,7 @@
 							<div class="container">
 								<h3 class="main-section-header text-huge text-white text-with-subtitle">{{ messages.title }}</h3>
 								<p class="text-medium text-gray text-with-subtitle">{{ redact(messages.slogan, messages.slogan_alt) }}</p>
-								<p class="text-medium text-gray text-with-subtitle">Location: {{ redact(messages.city) }}, {{ redact(messages.province) }}, {{ messages.country }}</p>
+								<p class="text-medium text-gray text-with-subtitle">Location: {{ messages.city }}, {{ messages.country }}</p>
 								<p class="text-medium text-gray text-with-subtitle">Github: <a href="{{ messages.github }}">{{ messages.github }}</a></p>
 							</div>
 						</div>
@@ -75,13 +75,60 @@
 					<img src="https://placeholdit.imgix.net/~text?txtsize=45&txt=N/A&w=250&h=250" alt="Preview">
 				</div>
 				<div class="col-md-9">
+					<h3 class="title text-big text-with-subtitle">vbm-ex</h3>
+					<p class="links">
+						<a href="{{ messages.github }}/vbm-ex">GitHub</a>
+					</p>
+					<div class="content-start">
+						<p class="text">vbm-ex (<strong>vB</strong>ulletin <strong>m</strong>onitor in <strong>E</strong>li<strong>x</strong>ir)
+							is a realtime monitor for <a href="https://www.vbulletin.com/">vBulletin</a> based forums based on <a href="http://www.phoenixframework.org/">Phoenix framework</a>.<br />
+							It will monitor new users and try detect ban evaders, monitor new posts and threads for violations.
+						</p>
+					</div>
+					<ul class="badges no-cursor badges-list">
+						{{ badge("Elixir") }}
+						{{ badge("Web") }}
+						{{ badge("Phoenix framework") }}
+						{{ badge("vBulletin") }}
+					</ul>
+				</div>
+			</div>
+			<div class="project border-top row">
+				<div class="col-md-3">
+					<img src="https://placeholdit.imgix.net/~text?txtsize=45&txt=N/A&w=250&h=250" alt="Preview">
+				</div>
+				<div class="col-md-9">
+					<h3 class="title text-big text-with-subtitle">Mobilissu</h3>
+					<p class="links">
+						<a href="{{ messages.github }}/mobilissu">GitHub</a>
+					</p>
+					<div class="content-start">
+						<p class="text">Mobilissu is an Android application for tracking Tampere's buses in real time by using the city's open data.<br />
+							The application will use a Golang based server that formats and optimizes the usage of the big open data queries.
+						</p>
+					</div>
+					<ul class="badges no-cursor badges-list">
+						{{ badge("Java") }}
+						{{ badge("Android") }}
+						{{ badge("Mobile") }}
+						{{ badge("Tampere") }}
+						{{ badge("Go") }}
+						{{ badge("Open data") }}
+					</ul>
+				</div>
+			</div>
+			<div class="project border-top row">
+				<div class="col-md-3">
+					<img src="https://placeholdit.imgix.net/~text?txtsize=45&txt=N/A&w=250&h=250" alt="Preview">
+				</div>
+				<div class="col-md-9">
 				<h3 class="title text-big text-with-subtitle">Steam Tracker</h3>
 				<p class="links">
 					<a href="https://steam.0x7ff.com/">Website</a> - <a href="{{ messages.github }}/steamtracker">GitHub</a>
 				</p>
 					<div class="content-start">
-						<p class="text">Steam Tracker is my newest and current Steam user and game tracking website powered by <a href="http://projects.spring.io/spring-boot/">Spring Boot</a>.<br/>
-							Steam Tracker utilizes Steam's API to track how much players have played their games each day, with game-specific statistics tracking in works.
+						<p class="text">Steam Tracker is a Steam user and game tracking website powered by <a href="http://projects.spring.io/spring-boot/">Spring Boot</a>.<br/>
+							Steam Tracker utilizes Steam's API to track how much players have played their games each day, with game-specific statistics tracking in planning.
 						</p>
 					</div>
 					<ul class="badges no-cursor badges-list">
@@ -90,7 +137,6 @@
 						{{ badge("Steam") }}
 						{{ badge("PostgreSQL") }}
 						{{ badge("API") }}
-						{{ badge("Current project", "badge-primary") }}
 					</ul>
 				</div>
 			</div>
@@ -165,7 +211,6 @@
 					<ul class="badges no-cursor badges-list">
 						{{ badge("Go") }}
 						{{ badge("IRC") }}
-						{{ badge("In development", "badge-dark") }}
 					</ul>
 				</div>
 			</div>

@@ -55,7 +55,6 @@ func init() {
 
 func main() {
 	flag.Parse()
-	log.Println("Welcome to 0x7ff site")
 
 	e := echo.New()
 	renderer := pongor.GetRenderer()
