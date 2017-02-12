@@ -2,15 +2,15 @@
 ## Packaging and deploying targets for Debian based target systems with systemd
 ##
 
-all: build
+all: build-gb
 
 deps:
 	glide up
 
-build:
+build-gb:
 	go build -o site main.go
 
-package: build
+package: build-gb
 	sudo rm -rf build/
 	mkdir -p build/opt/0x7ff
 	mkdir -p build/opt/0x7ff/resources
@@ -35,12 +35,13 @@ package: build
 
 deploy:
 	mkdir -p tmp
-	echo "sudo dpkg -i /tmp/site-deploy/site-0x7ff.deb" >> tmp/deploy
-	echo "sudo systemctl daemon-reload" >> tmp/deploy
-	echo "sudo systemctl restart site-0x7ff" >> tmp/deploy
-	echo "rm -r /tmp/site-deploy" >> tmp/deploy
-	chmod +x tmp/deploy
-	rsync -aqzhe ssh --progress --checksum --timeout=10 build/site-0x7ff.deb ${user}@${target}:/tmp/site-deploy/
-	rsync -aqzhe ssh --progress --checksum --timeout=10 tmp/deploy ${user}@${target}:/tmp/site-deploy/
-	ssh -t ${user}@${target} "sudo /tmp/site-deploy/deploy"
+	echo "sudo dpkg -i /tmp/site-0x7ff.deb" >> tmp/deploy-site
+	echo "sudo systemctl daemon-reload" >> tmp/deploy-site
+	echo "sudo systemctl restart site-0x7ff" >> tmp/deploy-site
+	echo "rm -r /tmp/site-0x7ff.deb" >> tmp/deploy-site
+	echo "rm -r /tmp/deploy-site" >> tmp/deploy-site
+	chmod +x tmp/deploy-site
+	rsync -aqzhe ssh --progress --checksum --timeout=10 build/site-0x7ff.deb ${user}@${target}:/tmp/
+	rsync -aqzhe ssh --progress --checksum --timeout=10 tmp/deploy-site ${user}@${target}:/tmp/
+	ssh -t ${user}@${target} "sudo /tmp/deploy-site"
 	rm -r tmp/
