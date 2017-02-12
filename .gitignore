@@ -1,3 +1,7 @@
+.*
+*~
+
+# Site
 systemd/site-0x7ff.service
 resources/messages.txt
 vendor/
