@@ -3,14 +3,13 @@ package main
 import (
 	"bytes"
 	"flag"
-	"github.com/echo-contrib/pongor"
 	"github.com/flosch/pongo2"
 	"github.com/fsnotify/fsnotify"
 	"github.com/jimlawless/cfg"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/engine/standard"
-	"github.com/labstack/echo/middleware"
 	"log"
+	"goji.io"
+	"goji.io/pat"
+	"net/http"
 )
 
 const MESSAGES_FILE = "resources/messages.txt"
@@ -21,6 +20,9 @@ var (
 	secretKey      = flag.String("key", "key", "Key of secret for redacting text")
 	secret         = flag.String("secret", "", "Secret for redacting text")
 	messages       = loadMessages()
+	publicPath     = "resources/static/"
+	fs             http.Handler
+	indexTemplate  *pongo2.Template
 )
 
 func init() {
@@ -56,31 +58,38 @@ func init() {
 func main() {
 	flag.Parse()
 
-	e := echo.New()
-	renderer := pongor.GetRenderer()
-	renderer.Directory = "resources/templates/"
-	renderer.Reload = *templateReload
-	e.SetRenderer(renderer)
-
 	go func() {
 		watchMessages()
 	}()
 
-	e.Pre(middleware.AddTrailingSlash())
-	e.GET("/", func(ctx echo.Context) error {
-		err := renderer.Render(ctx.Response().Writer(), "index.html", getContext(ctx), ctx)
-		if err != nil {
-			log.Println(err.Error())
-		}
-		return err
-	})
-	e.Static("/static", "resources/static")
-	e.Run(standard.New(*listenAddr))
+	mux := goji.NewMux()
+	fs = http.StripPrefix("/static/", http.FileServer(http.Dir(publicPath)))
+
+	log.Println("Mapping routes...")
+	mux.HandleFunc(pat.Get("/"), index)
+	mux.HandleFunc(pat.Get("/static/*"), serveStatic)
+
+	log.Println("Binding to port", *listenAddr)
+	http.ListenAndServe(*listenAddr, mux)
 }
 
-func getContext(ctx echo.Context) map[string]interface{} {
-	key := ctx.QueryParam(*secretKey)
-	return map[string]interface{}{
+func index(writer http.ResponseWriter, request *http.Request) {
+	if *templateReload || indexTemplate == nil {
+		indexTemplate = pongo2.Must(pongo2.FromFile("resources/templates/index.html"))
+	}
+
+	if err := indexTemplate.ExecuteWriter(getContext(request), writer); err != nil {
+		http.Error(writer, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+func serveStatic(writer http.ResponseWriter, request *http.Request) {
+	fs.ServeHTTP(writer, request)
+}
+
+func getContext(request *http.Request) pongo2.Context {
+	key := request.URL.Query().Get(*secretKey)
+	return pongo2.Context{
 		"messages": messages,
 		"unlock":   key == *secret,
 	}
