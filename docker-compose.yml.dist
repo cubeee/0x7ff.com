@@ -1,0 +1,11 @@
+version: '3'
+services:
+  site:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ./site -addr :80 -reload true
+    ports:
+      - "33333:80"
+    environment:
+      VIRTUAL_HOST: 'localhost:33333'

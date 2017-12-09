@@ -1,10 +1,17 @@
 .*
 *~
+!.gitignore
+!.travis.yml
+!.dockerignore
+
+# Temporary files
+*~
+
+# Git
+!.git*
 
 # Site
-systemd/site-0x7ff.service
 resources/messages.txt
 vendor/
 build/
-glide.lock
-site
+docker-compose.yml
