@@ -1,0 +1,10 @@
+sudo: required
+
+addons:
+  apt:
+    packages:
+      - docker-ce
+
+script:
+- docker build -t site .
+- docker run --rm site test -f ./site
