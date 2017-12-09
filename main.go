@@ -10,6 +10,7 @@ import (
 	"goji.io"
 	"goji.io/pat"
 	"net/http"
+	"time"
 )
 
 const MESSAGES_FILE = "resources/messages.txt"
@@ -89,9 +90,11 @@ func serveStatic(writer http.ResponseWriter, request *http.Request) {
 
 func getContext(request *http.Request) pongo2.Context {
 	key := request.URL.Query().Get(*secretKey)
+	year := time.Now().Year()
 	return pongo2.Context{
 		"messages": messages,
 		"unlock":   key == *secret,
+		"year":     year,
 	}
 }
 
